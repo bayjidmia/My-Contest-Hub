@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
+import { AuthContext } from "../../../Authprovide/Context/Context";
 
 const Register = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
+  const { GooglesignIn, setuser } = useContext(AuthContext);
 
   const {
     register,
@@ -12,7 +15,14 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {};
+  const onSubmit = (data) => {
+               
+    
+
+  };
+  const handleGoogle = () => {
+    GooglesignIn().then((res) => setuser(res.user));
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
@@ -95,6 +105,14 @@ const Register = () => {
           {/* Register Button */}
           <button className="btn btn-primary w-full mt-4">Register</button>
         </form>
+        <div className="divider">OR</div>
+
+        <button
+          onClick={handleGoogle}
+          className="btn btn-outline w-full flex items-center gap-2"
+        >
+          <FcGoogle size={22} /> Login with Google
+        </button>
 
         <p className="text-center mt-4">
           Already have an account?{" "}
