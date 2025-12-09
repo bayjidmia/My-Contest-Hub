@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../../Authprovide/Context/Context";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
-  const { GooglesignIn, setuser } = useContext(AuthContext);
+  const { GooglesignIn, setuser, updateUser, createUser } =
+    useContext(AuthContext);
 
   const {
     register,
@@ -16,9 +18,51 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-               
-    
+    console.log(data);
+    const profileimage = data?.photo[0];
 
+    console.log(profileimage);
+    createUser(data.email, data.password)
+      .then((result) => {
+        console.log("User created", result);
+        setuser(result.user);
+
+        // prepare formdata
+        const formData = new FormData();
+        formData.append("image", profileimage);
+
+        // ACTUAL IMGBB API URL
+        const url = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host
+        }`;
+
+        axios
+          .post(url, formData)
+          .then((res) => {
+            console.log("Image uploaded:", res.data);
+            const imageURL = res.data?.data?.display_url;
+            console.log("Image URL:", imageURL);
+
+            const userProfile = {
+              displayName: data.name,
+              photoURL: res.data.data.display_url,
+            };
+
+            updateUser(userProfile)
+              .then(() => {
+                console.log("user profile done");
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          })
+          .catch((err) => {
+            console.log("Upload error:", err);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const handleGoogle = () => {
     GooglesignIn().then((res) => setuser(res.user));
