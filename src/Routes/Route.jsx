@@ -5,6 +5,9 @@ import Login from "../Pages/Authentication/Login/Login";
 import Register from "../Pages/Authentication/Register/Register";
 import Error from "../Pages/Error/Error";
 import ContestDetails from "../Pages/ContestDetails/ContestDetails";
+import CreateContest from "../Pages/CreateContest/CreateContest";
+import PrivateRoute from "../Pages/PrivateRoute/PrivateRoute";
+import DashboardLayout from "../Layout/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +30,19 @@ export const router = createBrowserRouter([
         path: "/contest-details/:id",
         Component: ContestDetails,
       },
+      {
+        path: "/create-contest",
+        Component: CreateContest,
+      },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
   },
 
   {

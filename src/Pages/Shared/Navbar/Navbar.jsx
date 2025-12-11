@@ -28,6 +28,11 @@ const Navbar = () => {
           Winners
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/create-contest" className="font-semibold">
+          Create Contest
+        </NavLink>
+      </li>
     </>
   );
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { NavLink } from "react-router";
+import { IoIosMan } from "react-icons/io";
 
 const LatestContext = () => {
   const axiosSecure = useAxiosSecure();
@@ -50,6 +51,16 @@ const LatestContext = () => {
                   >
                     read more...
                   </NavLink>
+                </div>
+              </div>
+              <div className="flex text-center">
+                <div className="ml-8 flex gap-1">
+                  <h1 className="text-xl font-bold">
+                    <IoIosMan />
+                  </h1>
+                  <h2 className="font-bold text-gray-500">
+                    {contest.participantsCount}
+                  </h2>
                 </div>
               </div>
             </div>
