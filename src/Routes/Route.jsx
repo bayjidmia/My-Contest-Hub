@@ -8,6 +8,8 @@ import ContestDetails from "../Pages/ContestDetails/ContestDetails";
 import CreateContest from "../Pages/CreateContest/CreateContest";
 import PrivateRoute from "../Pages/PrivateRoute/PrivateRoute";
 import DashboardLayout from "../Layout/DashboardLayout";
+import ContestAprove from "../Pages/ContestAprove/ContestAprove";
+import AllContest from "../Pages/AllContest/AllContest";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +36,10 @@ export const router = createBrowserRouter([
         path: "/create-contest",
         Component: CreateContest,
       },
+      {
+        path: "/all-contest",
+        Component: AllContest,
+      },
     ],
   },
   {
@@ -43,6 +49,12 @@ export const router = createBrowserRouter([
         <DashboardLayout></DashboardLayout>
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "contest-aprove",
+        element: <ContestAprove></ContestAprove>,
+      },
+    ],
   },
 
   {
