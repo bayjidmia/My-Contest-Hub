@@ -151,7 +151,7 @@ const CreateContest = () => {
         </div>
 
         {/* Submit Button */}
-        <button className="w-full bg-blue-600 text-white p-3 mt-4 rounded hover:bg-blue-700">
+        <button className="w-full bg-primary text-white p-3 mt-4 rounded hover:bg-blue-700">
           Create Contest
         </button>
       </form>

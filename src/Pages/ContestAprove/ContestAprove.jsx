@@ -11,6 +11,7 @@ const ContestAprove = () => {
     data: contests = [],
 
     isLoading,
+    refetch,
   } = useQuery({
     queryKey: ["latest-contest"],
     queryFn: async () => {
@@ -24,6 +25,36 @@ const ContestAprove = () => {
       <span className="loading loading-spinner text-error text-center"></span>
     );
   }
+
+  const handleaprove = async (id) => {
+    try {
+      const res = await axiosSecure.patch(`/contest-status/${id}`, {
+        status: "approved",
+      });
+
+      if (res.data.modifiedCount > 0) {
+        alert("Status updated successfully!");
+        refetch(); // UI refresh
+      }
+    } catch {
+      (error) => console.log(error);
+    }
+  };
+
+  const handlecancle = async (id) => {
+    try {
+      const res = await axiosSecure.patch(`/contest-cancle/${id}`, {
+        status: "canceled",
+      });
+
+      if (res.data.modifiedCount > 0) {
+        alert("Status updated successfully!");
+        refetch(); // UI refresh
+      }
+    } catch {
+      (error) => console.log(error);
+    }
+  };
 
   console.log(contests);
   return (
@@ -77,10 +108,16 @@ const ContestAprove = () => {
               </td>
               <th>
                 <div className="flex gap-2">
-                  <button className="btn btn-xs">
+                  <button
+                    onClick={() => handleaprove(contest._id)}
+                    className="btn btn-xs"
+                  >
                     <ImCheckmark />
                   </button>
-                  <button className="btn btn-xs">
+                  <button
+                    onClick={() => handlecancle(contest._id)}
+                    className="btn btn-xs"
+                  >
                     <FaXmark />
                   </button>
                 </div>
