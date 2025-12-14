@@ -10,6 +10,8 @@ import PrivateRoute from "../Pages/PrivateRoute/PrivateRoute";
 import DashboardLayout from "../Layout/DashboardLayout";
 import ContestAprove from "../Pages/ContestAprove/ContestAprove";
 import AllContest from "../Pages/AllContest/AllContest";
+import Payment from "../Pages/Payment/Payment";
+import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +55,14 @@ export const router = createBrowserRouter([
       {
         path: "contest-aprove",
         element: <ContestAprove></ContestAprove>,
+      },
+      {
+        path: "payment/:id",
+        Component: Payment,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
       },
     ],
   },

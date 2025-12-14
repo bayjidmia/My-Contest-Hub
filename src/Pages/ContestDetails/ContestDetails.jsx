@@ -1,8 +1,9 @@
 import React from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { IoIosMan } from "react-icons/io";
+import LiveCountdown from "../../Component/LiveCountdown/LiveCountdown";
 
 const ContestDetails = () => {
   const { id } = useParams();
@@ -17,6 +18,9 @@ const ContestDetails = () => {
     },
   });
   console.log(contest);
+  const isExpired = contest?.deadline
+    ? new Date(contest.deadline) < new Date()
+    : false;
 
   return (
     <div>
@@ -51,7 +55,13 @@ const ContestDetails = () => {
           <div className="flex gap-2 font-bold text-xl text-black ">
             <h1 className="text underline">Contest End</h1>
             <p>:</p>
-            <p>{contest.deadline}</p>
+            <p>
+              {contest?.deadline ? (
+                <LiveCountdown targetDate={contest.deadline} />
+              ) : (
+                <span className="text-gray-400">Loading...</span>
+              )}
+            </p>
           </div>{" "}
         </div>
       </div>
@@ -89,7 +99,21 @@ const ContestDetails = () => {
       <div className="flex flex-col justify-center items-center my-5 ">
         <h1 className="font-bold text-xl my-2">Take a Challenge</h1>
         <div>
-          <button className="btn btn-primary text-black p-3">Pay</button>
+          {" "}
+          {isExpired ? (
+            <button
+              disabled
+              className="btn btn-sm bg-gray-400 cursor-not-allowed text-black"
+            >
+              Contest Ended
+            </button>
+          ) : contest.paymentStatus === "paid" ? (
+            <span className="text-green-500 font-bold">Paid</span>
+          ) : (
+            <Link to={`/dashboard/payment/${contest._id}`}>
+              <button className="btn btn-primary btn-sm text-black">Pay</button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
