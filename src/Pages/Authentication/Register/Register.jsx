@@ -4,12 +4,14 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../../Authprovide/Context/Context";
 import axios from "axios";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 const Register = () => {
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const { GooglesignIn, setuser, updateUser, createUser } =
     useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -42,6 +44,17 @@ const Register = () => {
             console.log("Image uploaded:", res.data);
             const imageURL = res.data?.data?.display_url;
             console.log("Image URL:", imageURL);
+            const userInfo = {
+              email: data.email,
+              displayName: data.name,
+              photoURL: imageURL,
+            };
+
+            axiosSecure.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log("user insorted in the database");
+              }
+            });
 
             const userProfile = {
               displayName: data.name,

@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { AuthContext } from "../../Authprovide/Context/Context";
 
 const Payment = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
   const { isLoading, data: contest = [] } = useQuery({
     queryKey: ["parcels", id],
     queryFn: async () => {
@@ -24,6 +26,7 @@ const Payment = () => {
       contestId: contest._id,
       creatorEmail: contest.creatorEmail,
       contestName: contest.contestName,
+      userEmail: user.email,
     };
 
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);

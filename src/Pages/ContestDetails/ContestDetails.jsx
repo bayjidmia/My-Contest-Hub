@@ -4,6 +4,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { IoIosMan } from "react-icons/io";
 import LiveCountdown from "../../Component/LiveCountdown/LiveCountdown";
+import SubmissionForm from "../Submissionform/Submissionform";
 
 const ContestDetails = () => {
   const { id } = useParams();
@@ -99,17 +100,12 @@ const ContestDetails = () => {
       <div className="flex flex-col justify-center items-center my-5 ">
         <h1 className="font-bold text-xl my-2">Take a Challenge</h1>
         <div>
-          {" "}
-          {isExpired ? (
-            <button
-              disabled
-              className="btn btn-sm bg-gray-400 cursor-not-allowed text-black"
-            >
-              Contest Ended
-            </button>
-          ) : contest.paymentStatus === "paid" ? (
-            <span className="text-green-500 font-bold">Paid</span>
-          ) : (
+          {!isExpired && contest.paymentStatus == "paid" && (
+            <SubmissionForm contestId={contest._id} />
+          )}
+
+          {/* Not paid */}
+          {!isExpired && contest.paymentStatus !== "paid" && (
             <Link to={`/dashboard/payment/${contest._id}`}>
               <button className="btn btn-primary btn-sm text-black">Pay</button>
             </Link>
