@@ -111,6 +111,12 @@ const Navbar = () => {
                 </li>
 
                 <li>
+                  <Link to="/profile" className="justify-between">
+                    Your profile
+                  </Link>
+                </li>
+
+                <li>
                   <button onClick={handleLogout} className="text-red-500">
                     Logout
                   </button>

@@ -74,11 +74,13 @@ const DashboardLayout = () => {
             <li>
               <Link
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Parcels"
-                to={"/dashboard/my-parcels"}
+                data-tip="My Participated Contests"
+                to={"/dashboard/my-contest"}
               >
                 <AiOutlineTruck className="my-1.5 inline-block size-4" />
-                <span className="is-drawer-close:hidden">My Parcels</span>
+                <span className="is-drawer-close:hidden">
+                  My Participated Contests
+                </span>
               </Link>
             </li>
             <li>

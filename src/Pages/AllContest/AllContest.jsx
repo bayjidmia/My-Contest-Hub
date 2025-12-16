@@ -11,7 +11,7 @@ const AllContest = () => {
 
     isLoading,
   } = useQuery({
-    queryKey: ["latest-contest"],
+    queryKey: ["all-contest"],
     queryFn: async () => {
       const res = await axiosSecure.get("all-contest?status=approved");
       return res.data;
@@ -62,12 +62,20 @@ const AllContest = () => {
               </div>
               <div className="flex text-center">
                 <div className="ml-8 flex gap-1">
-                  <h1 className="text-xl font-bold">
-                    <IoIosMan />
-                  </h1>
-                  <h2 className="font-bold text-gray-500">
-                    {contest.participantsCount}
-                  </h2>
+                  <div className="ml-8 flex gap-1">
+                    <h1 className="text-xl font-bold">
+                      <IoIosMan />
+                    </h1>
+                    {contest.paymentStatus == "paid" ? (
+                      <h2 className="font-bold text-gray-500">
+                        {contest.participantsCount + 1}
+                      </h2>
+                    ) : (
+                      <h2 className="font-bold text-gray-500">
+                        {contest.participantsCount}
+                      </h2>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

@@ -27,7 +27,9 @@ const Payment = () => {
       creatorEmail: contest.creatorEmail,
       contestName: contest.contestName,
       userEmail: user.email,
+      deadline: contest.deadline,
     };
+    console.log(contest);
 
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
     window.location.href = res.data.url;

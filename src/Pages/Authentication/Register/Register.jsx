@@ -78,7 +78,24 @@ const Register = () => {
       });
   };
   const handleGoogle = () => {
-    GooglesignIn().then((res) => setuser(res.user));
+    GooglesignIn()
+      .then((res) => {
+        setuser(res.user);
+        const userInfo = {
+          email: res.user.email,
+          displayName: res.user.displayName,
+          photoURL: res.user.photoURL,
+        };
+
+        axiosSecure.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            console.log("user insorted in the database");
+          } else {
+            console.log("ℹ️ User already exists");
+          }
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

@@ -71,9 +71,15 @@ const ContestDetails = () => {
           <h1 className="text-xl font-bold">
             <IoIosMan />
           </h1>
-          <h2 className="font-bold text-gray-500">
-            {contest.participantsCount}
-          </h2>
+          {contest.paymentStatus == "paid" ? (
+            <h2 className="font-bold text-gray-500">
+              {contest.participantsCount + 1}
+            </h2>
+          ) : (
+            <h2 className="font-bold text-gray-500">
+              {contest.participantsCount}
+            </h2>
+          )}
         </div>
       </div>
 

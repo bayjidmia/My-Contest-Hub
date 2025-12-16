@@ -30,7 +30,7 @@ const Authprovider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
 
   const GooglesignIn = () => {
-    signInWithPopup(auth, googleProvider);
+    return signInWithPopup(auth, googleProvider);
   };
 
   const createUser = (email, password) => {
