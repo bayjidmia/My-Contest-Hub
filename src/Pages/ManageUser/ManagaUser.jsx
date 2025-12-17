@@ -10,7 +10,7 @@ const ManagaUser = () => {
 
   const {
     data: users = [],
-    isError,
+
     isLoading,
     refetch,
   } = useQuery({
@@ -45,6 +45,48 @@ const ManagaUser = () => {
     try {
       const res = await axiosSecure.patch(`/role-change/${id}`, {
         role: "admin",
+      });
+
+      if (res.data.modifiedCount > 0) {
+        // Success alert
+        Swal.fire({
+          icon: "success",
+          title: "Successfully update!",
+          text: "Contest has been canceled successfully.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+
+        refetch(); // UI refresh
+      }
+    } catch (error) {
+      // Error alert
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: error.message || "Something went wrong",
+      });
+    }
+  };
+
+  const handleadminremove = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You want to approve this contest!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, approve it!",
+      cancelButtonText: "No, cancel",
+    });
+
+    if (!result.isConfirmed) return;
+
+    // Step 3: API call if confirmed
+    try {
+      const res = await axiosSecure.patch(`/role-change/${id}`, {
+        role: "user",
       });
 
       if (res.data.modifiedCount > 0) {
@@ -121,7 +163,12 @@ const ManagaUser = () => {
                   >
                     <FaUserShield />
                   </button>
-                  <button className="btn btn-xs">
+                  <button
+                    onClick={() => {
+                      handleadminremove(user._id);
+                    }}
+                    className="btn btn-xs"
+                  >
                     <FaUserMinus />
                   </button>
                 </th>

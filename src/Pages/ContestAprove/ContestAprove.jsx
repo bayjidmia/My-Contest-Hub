@@ -84,7 +84,7 @@ const ContestAprove = () => {
     }
   };
 
-  const handlecancle = async (id) => {
+  const handlecancle = async ({ parcelId, userId }) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You want to cancel this contest!",
@@ -100,15 +100,15 @@ const ContestAprove = () => {
 
     // Step 3: API call if confirmed
     try {
-      const res1 = await axiosSecure.patch(`/contest-cancle/${id}`, {
+      const res1 = await axiosSecure.patch(`/contest-cancle/${parcelId}`, {
         status: "canceled",
       });
 
-      // const res2 = await axiosSecure.patch(`/status-change)/${id}`, {
-      //   role: "user",
-      // });
+      const res2 = await axiosSecure.patch(`/status-change/${userId}`, {
+        role: "user",
+      });
 
-      if (res1.data.modifiedCount > 0) {
+      if (res1.data.modifiedCount > 0 && res2.data.modifiedCount > 0) {
         // Success alert
         Swal.fire({
           icon: "success",
@@ -194,7 +194,12 @@ const ContestAprove = () => {
                     <ImCheckmark />
                   </button>
                   <button
-                    onClick={() => handlecancle(contest._id)}
+                    onClick={() =>
+                      handlecancle({
+                        parcelId: contest._id,
+                        userId: getUserId(contest.creatorEmail),
+                      })
+                    }
                     className="btn btn-xs"
                   >
                     <FaXmark />
