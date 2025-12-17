@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ImCheckmark } from "react-icons/im";
 
 import { FaXmark } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const ContestAprove = () => {
   const axiosSecure = useAxiosSecure();
@@ -20,39 +21,112 @@ const ContestAprove = () => {
     },
   });
 
+  const { data: users = [] } = useQuery({
+    queryKey: ["all-user"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/all-user");
+      return res.data;
+    },
+  });
+
+  const getUserId = (creatorEmail) => {
+    const foundUser = users.find((user) => user.email === creatorEmail);
+    return foundUser ? foundUser._id : null;
+  };
+
   if (isLoading) {
     return (
       <span className="loading loading-spinner text-error text-center"></span>
     );
   }
 
-  const handleaprove = async (id) => {
+  const handleaprove = async ({ parcelId, userId }) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You want to approve this contest!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, approve it!",
+      cancelButtonText: "No, cancel",
+    });
+
+    // ❌ Cancel করলে এখানেই stop
+    if (!result.isConfirmed) return;
+
     try {
-      const res = await axiosSecure.patch(`/contest-status/${id}`, {
+      const res1 = await axiosSecure.patch(`/contest-status/${parcelId}`, {
         status: "approved",
       });
 
-      if (res.data.modifiedCount > 0) {
-        alert("Status updated successfully!");
+      const res2 = await axiosSecure.patch(`/status-change/${userId}`, {
+        role: "creator",
+      });
+
+      if (res1.data.modifiedCount > 0 && res2.data.modifiedCount > 0) {
+        Swal.fire({
+          icon: "success",
+          title: "Approved!",
+          text: "Contest has been approved successfully.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+
         refetch(); // UI refresh
       }
-    } catch {
-      (error) => console.log(error);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: error.message || "Something went wrong",
+      });
     }
   };
 
   const handlecancle = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You want to cancel this contest!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, keep it",
+    });
+    // Step 2: If user cancels, stop here
+    if (!result.isConfirmed) return;
+
+    // Step 3: API call if confirmed
     try {
-      const res = await axiosSecure.patch(`/contest-cancle/${id}`, {
+      const res1 = await axiosSecure.patch(`/contest-cancle/${id}`, {
         status: "canceled",
       });
 
-      if (res.data.modifiedCount > 0) {
-        alert("Status updated successfully!");
+      // const res2 = await axiosSecure.patch(`/status-change)/${id}`, {
+      //   role: "user",
+      // });
+
+      if (res1.data.modifiedCount > 0) {
+        // Success alert
+        Swal.fire({
+          icon: "success",
+          title: "Canceled!",
+          text: "Contest has been canceled successfully.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+
         refetch(); // UI refresh
       }
-    } catch {
-      (error) => console.log(error);
+    } catch (error) {
+      // Error alert
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: error.message || "Something went wrong",
+      });
     }
   };
 
@@ -109,7 +183,12 @@ const ContestAprove = () => {
               <th>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => handleaprove(contest._id)}
+                    onClick={() =>
+                      handleaprove({
+                        parcelId: contest._id,
+                        userId: getUserId(contest.creatorEmail),
+                      })
+                    }
                     className="btn btn-xs"
                   >
                     <ImCheckmark />

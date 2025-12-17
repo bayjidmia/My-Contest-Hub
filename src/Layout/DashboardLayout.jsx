@@ -94,6 +94,17 @@ const DashboardLayout = () => {
               </Link>
             </li>
 
+            <li>
+              <Link
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="manage-user"
+                to={"/dashboard/all-user"}
+              >
+                <AiOutlineTruck className="my-1.5 inline-block size-4" />
+                <span className="is-drawer-close:hidden">Manage-user</span>
+              </Link>
+            </li>
+
             {/* List item */}
             <li>
               <button
