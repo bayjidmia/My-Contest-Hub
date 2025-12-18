@@ -185,7 +185,7 @@ const Register = () => {
           onClick={handleGoogle}
           className="btn btn-outline w-full flex items-center gap-2"
         >
-          <FcGoogle size={22} /> Login with Google
+          <FcGoogle size={22} /> Signup with Google
         </button>
 
         <p className="text-center mt-4">

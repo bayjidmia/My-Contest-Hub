@@ -3,9 +3,12 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router";
 import { IoIosMan } from "react-icons/io";
+import { useContext } from "react";
+import { AuthContext } from "../../Authprovide/Context/Context";
 
 const AllContest = () => {
   const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
   const {
     data: contests = [],
 
@@ -20,7 +23,9 @@ const AllContest = () => {
 
   if (isLoading) {
     return (
-      <span className="loading loading-spinner text-error text-center"></span>
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-spinner text-error"></span>
+      </div>
     );
   }
   return (
@@ -53,7 +58,7 @@ const AllContest = () => {
                   <p>{contest.description.slice(0, 100)} </p>
 
                   <NavLink
-                    to={`/contest-details/${contest._id}`}
+                    to={user ? `/contest-details/${contest._id}` : "/login"}
                     className="text-blue-600 font-medium cursor-pointer"
                   >
                     read more...

@@ -5,7 +5,7 @@ import Login from "../Pages/Authentication/Login/Login";
 import Register from "../Pages/Authentication/Register/Register";
 import Error from "../Pages/Error/Error";
 import ContestDetails from "../Pages/ContestDetails/ContestDetails";
-import CreateContest from "../Pages/CreateContest/CreateContest";
+
 import PrivateRoute from "../Pages/PrivateRoute/PrivateRoute";
 import DashboardLayout from "../Layout/DashboardLayout";
 import ContestAprove from "../Pages/ContestAprove/ContestAprove";
@@ -15,6 +15,8 @@ import PaymentSuccess from "../Pages/Payment/PaymentSuccess";
 import Profile from "../Pages/Profile/Profile";
 import Myjoiningcontest from "../Pages/Myjoiningcontest/Myjoiningcontest";
 import ManagaUser from "../Pages/ManageUser/ManagaUser";
+import CreateContest from "../Pages/CreateContest/CreateContest";
+import Setwinner from "../Pages/Setwinner/Setwinner";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +41,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/create-contest",
-        Component: CreateContest,
+        element: (
+          <PrivateRoute>
+            <CreateContest></CreateContest>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/all-contest",
@@ -79,6 +85,10 @@ export const router = createBrowserRouter([
       {
         path: "all-user",
         Component: ManagaUser,
+      },
+      {
+        path: "set-winner",
+        Component: Setwinner,
       },
     ],
   },

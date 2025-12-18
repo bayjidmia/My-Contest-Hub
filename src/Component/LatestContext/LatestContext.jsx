@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { NavLink } from "react-router";
 import { IoIosMan } from "react-icons/io";
+import { AuthContext } from "../../Authprovide/Context/Context";
 
 const LatestContext = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: contests = [] } = useQuery({
+  const { user } = useContext(AuthContext);
+  const { data: contests = [], isLoading } = useQuery({
     queryKey: ["latest-contest"],
     queryFn: async () => {
       const res = await axiosSecure.get("latest-contest");
@@ -14,7 +16,13 @@ const LatestContext = () => {
     },
   });
 
-  console.log(contests);
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-spinner text-error"></span>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -46,7 +54,7 @@ const LatestContext = () => {
                   <p>{contest.description.slice(0, 100)} </p>
 
                   <NavLink
-                    to={`/contest-details/${contest._id}`}
+                    to={user ? `/contest-details/${contest._id}` : "/login"}
                     className="text-blue-600 font-medium cursor-pointer"
                   >
                     read more...
