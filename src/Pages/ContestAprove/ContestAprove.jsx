@@ -52,7 +52,6 @@ const ContestAprove = () => {
       cancelButtonText: "No, cancel",
     });
 
-    // ❌ Cancel করলে এখানেই stop
     if (!result.isConfirmed) return;
 
     try {
@@ -73,7 +72,7 @@ const ContestAprove = () => {
           showConfirmButton: false,
         });
 
-        refetch(); // UI refresh
+        refetch();
       }
     } catch (error) {
       Swal.fire({
@@ -95,10 +94,9 @@ const ContestAprove = () => {
       confirmButtonText: "Yes, cancel it!",
       cancelButtonText: "No, keep it",
     });
-    // Step 2: If user cancels, stop here
+
     if (!result.isConfirmed) return;
 
-    // Step 3: API call if confirmed
     try {
       const res1 = await axiosSecure.patch(`/contest-cancle/${parcelId}`, {
         status: "canceled",
@@ -109,7 +107,6 @@ const ContestAprove = () => {
       });
 
       if (res1.data.modifiedCount > 0 && res2.data.modifiedCount > 0) {
-        // Success alert
         Swal.fire({
           icon: "success",
           title: "Canceled!",

@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../../Authprovide/Context/Context";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showPass, setShowPass] = useState(false);
 
-  const { GooglesignIn, setuser } = useContext(AuthContext);
+  const { GooglesignIn, setuser, signIn } = useContext(AuthContext);
+  console.log(location);
 
   const {
     register,
@@ -19,7 +21,14 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log("Form submitted:", data);
-    // এখানে তুমি API call করতে পারো বা redirect করতে পারো
+    signIn(data.email, data.password)
+      .then((result) => {
+        setuser(result);
+        navigate(location?.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleGoogle = () => {

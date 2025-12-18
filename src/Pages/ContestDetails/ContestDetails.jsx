@@ -12,6 +12,17 @@ const ContestDetails = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
 
+  const { data: payments } = useQuery({
+    queryKey: ["payments"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/all-payments");
+      return res.data;
+    },
+  });
+
+  console.log("ttt", payments);
+
+  console.log(payments);
   const { data: contest = {}, isLoading } = useQuery({
     queryKey: ["contest-details", id],
     queryFn: async () => {
@@ -24,13 +35,22 @@ const ContestDetails = () => {
     ? new Date(contest.deadline) < new Date()
     : false;
 
-  if (isLoading) {
+  if (isLoading || !payments || !contest._id) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <span className="loading loading-spinner text-error"></span>
       </div>
     );
   }
+  const userPayment = payments?.find(
+    (p) => p.userEmmail === user?.email && p.contestd == contest._id
+  );
+
+  console.log(typeof contest._id, typeof payments[0].contestd);
+
+  console.log("userPayment", userPayment);
+
+  console.log(userPayment);
 
   return (
     <div className="max-w-6xl mx-auto p-4">
@@ -113,11 +133,12 @@ const ContestDetails = () => {
       {/* Submission / Payment */}
       <div className="flex flex-col items-center my-5 gap-3">
         <h2 className="font-bold text-xl">Take a Challenge</h2>
+
         {user?.email === contest.creatorEmail ? (
           <p className="text-green-600 font-semibold">It's your contest</p>
         ) : isExpired ? (
           <button className="btn btn-disabled btn-sm">Ended</button>
-        ) : contest.paymentStatus === "paid" ? (
+        ) : userPayment?.paymentstatus === "paid" ? (
           <SubmissionForm contestId={contest._id} />
         ) : (
           <Link to={`/dashboard/payment/${contest._id}`}>

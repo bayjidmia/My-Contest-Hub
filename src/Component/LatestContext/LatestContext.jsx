@@ -55,6 +55,7 @@ const LatestContext = () => {
 
                   <NavLink
                     to={user ? `/contest-details/${contest._id}` : "/login"}
+                    state={`/contest-details/${contest._id}`}
                     className="text-blue-600 font-medium cursor-pointer"
                   >
                     read more...
@@ -82,6 +83,9 @@ const LatestContext = () => {
             </div>
           );
         })}
+      </div>
+      <div className="text-center my-3">
+        <button className="btn btn-primary text-black ">see all</button>
       </div>
     </div>
   );

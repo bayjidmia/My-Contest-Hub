@@ -17,6 +17,7 @@ import Myjoiningcontest from "../Pages/Myjoiningcontest/Myjoiningcontest";
 import ManagaUser from "../Pages/ManageUser/ManagaUser";
 import CreateContest from "../Pages/CreateContest/CreateContest";
 import Setwinner from "../Pages/Setwinner/Setwinner";
+import Mycreatedcontest from "../Pages/Mycreatedcontest/Mycreatedcontest";
 
 export const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/contest-details/:id",
-        Component: ContestDetails,
+        element: (
+          <PrivateRoute>
+            <ContestDetails></ContestDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/create-contest",
@@ -89,6 +94,10 @@ export const router = createBrowserRouter([
       {
         path: "set-winner",
         Component: Setwinner,
+      },
+      {
+        path: "my-created-contest",
+        Component: Mycreatedcontest,
       },
     ],
   },

@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 
 import { AuthContext } from "../../../Authprovide/Context/Context";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const navLinks = (
     <>
@@ -40,6 +41,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
+    navigate("/");
   };
 
   return (

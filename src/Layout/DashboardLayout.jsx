@@ -1,9 +1,22 @@
 import React from "react";
 import { Link, Outlet } from "react-router";
-
-import { AiOutlineTruck } from "react-icons/ai";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { AiOutlineTruck, AiOutlineUser } from "react-icons/ai";
+import useRole from "../Hook/useRole";
+import { GiTrophyCup } from "react-icons/gi";
+import { MdCreateNewFolder, MdOutlineAssignmentTurnedIn } from "react-icons/md";
 
 const DashboardLayout = () => {
+  const { role, isLoading } = useRole();
+
+  if (isLoading || !role) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-spinner text-error"></span>
+      </div>
+    );
+  }
+  console.log(role);
   return (
     <div className="drawer max-w-7xl mx-auto lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -77,44 +90,69 @@ const DashboardLayout = () => {
                 data-tip="My Participated Contests"
                 to={"/dashboard/my-contest"}
               >
-                <AiOutlineTruck className="my-1.5 inline-block size-4" />
+                <FaRegCheckCircle className="my-1.5 inline-block size-4" />
+
                 <span className="is-drawer-close:hidden">
                   My Participated Contests
                 </span>
               </Link>
             </li>
-            <li>
-              <Link
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Aprove-Contest"
-                to={"/dashboard/contest-aprove"}
-              >
-                <AiOutlineTruck className="my-1.5 inline-block size-4" />
-                <span className="is-drawer-close:hidden">Aprove-Contest</span>
-              </Link>
-            </li>
 
-            <li>
-              <Link
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="manage-user"
-                to={"/dashboard/all-user"}
-              >
-                <AiOutlineTruck className="my-1.5 inline-block size-4" />
-                <span className="is-drawer-close:hidden">Manage-user</span>
-              </Link>
-            </li>
+            {role === "admin" && (
+              <>
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Aprove-Contest"
+                    to={"/dashboard/contest-aprove"}
+                  >
+                    <MdOutlineAssignmentTurnedIn className="my-1.5 inline-block size-4" />
 
-            <li>
-              <Link
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="set-winner"
-                to={"/dashboard/set-winner"}
-              >
-                <AiOutlineTruck className="my-1.5 inline-block size-4" />
-                <span className="is-drawer-close:hidden">Set winner</span>
-              </Link>
-            </li>
+                    <span className="is-drawer-close:hidden">
+                      Aprove-Contest
+                    </span>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="manage-user"
+                    to={"/dashboard/all-user"}
+                  >
+                    <AiOutlineUser className="my-1.5 inline-block size-4" />
+                    <span className="is-drawer-close:hidden">Manage-user</span>
+                  </Link>
+                </li>
+              </>
+            )}
+
+            {role === "creator" && (
+              <>
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="set-winner"
+                    to={"/dashboard/set-winner"}
+                  >
+                    <GiTrophyCup className="my-1.5 inline-block size-4" />
+                    <span className="is-drawer-close:hidden">Set winner</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Created Contest"
+                    to={"/dashboard/my-created-contest"}
+                  >
+                    <MdCreateNewFolder className="my-1.5 inline-block size-4" />
+                    <span className="is-drawer-close:hidden">
+                      My Created Contest
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {/* List item */}
             <li>
