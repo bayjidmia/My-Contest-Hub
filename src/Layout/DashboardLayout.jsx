@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Outlet } from "react-router";
-import { FaRegCheckCircle } from "react-icons/fa";
+import { FaRegCheckCircle, FaTrophy } from "react-icons/fa";
 import { AiOutlineTruck, AiOutlineUser } from "react-icons/ai";
 import useRole from "../Hook/useRole";
 import { GiTrophyCup } from "react-icons/gi";
@@ -83,20 +83,36 @@ const DashboardLayout = () => {
                 <span className="is-drawer-close:hidden">Homepage</span>
               </Link>
             </li>
+            {role === "user" && (
+              <>
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My Participated Contests"
+                    to={"/dashboard/my-contest"}
+                  >
+                    <FaRegCheckCircle className="my-1.5 inline-block size-4" />
 
-            <li>
-              <Link
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Participated Contests"
-                to={"/dashboard/my-contest"}
-              >
-                <FaRegCheckCircle className="my-1.5 inline-block size-4" />
+                    <span className="is-drawer-close:hidden">
+                      My Participated Contests
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My winnig Contests"
+                    to={"/dashboard/my-winning-contest"}
+                  >
+                    <FaTrophy className="my-1.5 inline-block size-4" />
 
-                <span className="is-drawer-close:hidden">
-                  My Participated Contests
-                </span>
-              </Link>
-            </li>
+                    <span className="is-drawer-close:hidden">
+                      My Winning Contests
+                    </span>
+                  </Link>
+                </li>
+              </>
+            )}
 
             {role === "admin" && (
               <>

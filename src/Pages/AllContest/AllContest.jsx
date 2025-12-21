@@ -21,6 +21,24 @@ const AllContest = () => {
     },
   });
 
+  const { data: payments } = useQuery({
+    queryKey: ["payments"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/all-payments");
+      return res.data;
+    },
+  });
+
+  console.log("ttt", payments);
+
+  const getPaymentCount = (contestId) => {
+    if (!payments) return 0;
+
+    return payments.filter(
+      (payment) => payment.contestd === contestId && payment.status === "paid"
+    ).length;
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -73,7 +91,8 @@ const AllContest = () => {
                     </h1>
                     {contest.paymentStatus == "paid" ? (
                       <h2 className="font-bold text-gray-500">
-                        {contest.participantsCount + 1}
+                        {contest.participantsCount +
+                          getPaymentCount(contest._id)}
                       </h2>
                     ) : (
                       <h2 className="font-bold text-gray-500">

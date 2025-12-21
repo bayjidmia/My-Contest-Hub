@@ -130,7 +130,6 @@ const ContestDetails = () => {
         </div>
       </div>
 
-      {/* Submission / Payment */}
       <div className="flex flex-col items-center my-5 gap-3">
         <h2 className="font-bold text-xl">Take a Challenge</h2>
 
@@ -138,6 +137,8 @@ const ContestDetails = () => {
           <p className="text-green-600 font-semibold">It's your contest</p>
         ) : isExpired ? (
           <button className="btn btn-disabled btn-sm">Ended</button>
+        ) : contest?.winner?.name ? (
+          <p className="text-red-500 font-semibold">Winner already declared</p>
         ) : userPayment?.paymentstatus === "paid" ? (
           <SubmissionForm contestId={contest._id} />
         ) : (

@@ -85,7 +85,9 @@ const LatestContext = () => {
         })}
       </div>
       <div className="text-center my-3">
-        <button className="btn btn-primary text-black ">see all</button>
+        <NavLink to={"/all-contest"}>
+          <button className="btn btn-primary text-black ">see all</button>
+        </NavLink>
       </div>
     </div>
   );

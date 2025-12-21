@@ -18,6 +18,8 @@ import ManagaUser from "../Pages/ManageUser/ManagaUser";
 import CreateContest from "../Pages/CreateContest/CreateContest";
 import Setwinner from "../Pages/Setwinner/Setwinner";
 import Mycreatedcontest from "../Pages/Mycreatedcontest/Mycreatedcontest";
+import Mywinningcontest from "../Pages/Mywiningcontest/Mywinningcontest";
+import AdminRoute from "../Hook/AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -72,7 +74,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "contest-aprove",
-        element: <ContestAprove></ContestAprove>,
+        element: (
+          <AdminRoute>
+            <ContestAprove></ContestAprove>
+          </AdminRoute>
+        ),
       },
       {
         path: "payment/:id",
@@ -89,7 +95,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-user",
-        Component: ManagaUser,
+        element: (
+          <AdminRoute>
+            <ManagaUser></ManagaUser>
+          </AdminRoute>
+        ),
       },
       {
         path: "set-winner",
@@ -98,6 +108,10 @@ export const router = createBrowserRouter([
       {
         path: "my-created-contest",
         Component: Mycreatedcontest,
+      },
+      {
+        path: "my-winning-contest",
+        Component: Mywinningcontest,
       },
     ],
   },

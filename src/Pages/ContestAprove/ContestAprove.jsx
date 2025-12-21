@@ -36,7 +36,9 @@ const ContestAprove = () => {
 
   if (isLoading) {
     return (
-      <span className="loading loading-spinner text-error text-center"></span>
+      <div className="flex justify-center items-center h-40">
+        <span className="loading loading-spinner text-primary"></span>
+      </div>
     );
   }
 

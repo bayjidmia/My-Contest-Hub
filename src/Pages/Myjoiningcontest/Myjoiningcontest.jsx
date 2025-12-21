@@ -12,14 +12,21 @@ const Myjoiningcontest = () => {
 
     isLoading,
   } = useQuery({
-    queryKey: ["my-contest"],
+    queryKey: ["payments"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`my-contest?email=${user.email}`);
+      const res = await axiosSecure.get(`payments?email=${user.email}`);
       return res.data;
     },
   });
 
   console.log(contests);
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-40">
+        <span className="loading loading-spinner text-primary"></span>
+      </div>
+    );
+  }
 
   return (
     <div>
