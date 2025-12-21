@@ -29,6 +29,8 @@ const Register = () => {
         console.log("User created", result);
         setuser(result.user);
 
+        navigate("/");
+
         // prepare formdata
         const formData = new FormData();
         formData.append("image", profileimage);
@@ -81,6 +83,7 @@ const Register = () => {
     GooglesignIn()
       .then((res) => {
         setuser(res.user);
+        navigate("/");
         const userInfo = {
           email: res.user.email,
           displayName: res.user.displayName,

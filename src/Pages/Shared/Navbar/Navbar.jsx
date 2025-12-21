@@ -25,8 +25,8 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/winners" className="font-semibold">
-          Winners
+        <NavLink to="/motivation" className="font-semibold">
+          Motivation
         </NavLink>
       </li>
       <li>

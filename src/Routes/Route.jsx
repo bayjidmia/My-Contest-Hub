@@ -20,6 +20,7 @@ import Setwinner from "../Pages/Setwinner/Setwinner";
 import Mycreatedcontest from "../Pages/Mycreatedcontest/Mycreatedcontest";
 import Mywinningcontest from "../Pages/Mywiningcontest/Mywinningcontest";
 import AdminRoute from "../Hook/AdminRoute";
+import Motivation from "../Pages/Motivation/Motivation";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile",
         Component: Profile,
+      },
+      {
+        path: "/motivation",
+        Component: Motivation,
       },
     ],
   },

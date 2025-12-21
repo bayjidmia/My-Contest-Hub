@@ -14,11 +14,33 @@ const useAxiosSecure = () => {
   console.log(user);
 
   useEffect(() => {
-    axiosSecure.interceptors.request.use((config) => {
+    const reqInterceptor = axiosSecure.interceptors.request.use((config) => {
       config.headers.Authorization = `Bearer ${user.accessToken}`;
       return config;
     });
-  }, [user]);
+
+    const resInterceptor = axiosSecure.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (err) => {
+        console.log(err);
+
+        const statuscode = err.response?.status;
+        if (statuscode === 401 || statuscode === 403) {
+          logout().then(() => {
+            navigate("/login");
+          });
+        }
+        return Promise.reject(err);
+      }
+    );
+
+    return () => {
+      axiosSecure.interceptors.request.eject(reqInterceptor);
+      axiosSecure.interceptors.response.eject(resInterceptor);
+    };
+  }, [user, logout, navigate]);
 
   return axiosSecure;
 };
