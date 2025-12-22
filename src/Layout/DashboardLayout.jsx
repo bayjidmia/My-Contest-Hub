@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, Outlet } from "react-router";
 import { FaRegCheckCircle, FaTrophy } from "react-icons/fa";
 import { AiOutlineTruck, AiOutlineUser } from "react-icons/ai";
 import useRole from "../Hook/useRole";
 import { GiTrophyCup } from "react-icons/gi";
 import { MdCreateNewFolder, MdOutlineAssignmentTurnedIn } from "react-icons/md";
+import { AuthContext } from "../Authprovide/Context/Context";
 
 const DashboardLayout = () => {
+  const { user, loading } = useContext(AuthContext);
   const { role, isLoading } = useRole();
-  console.log(role);
+  console.log(role, isLoading);
 
   if (isLoading || !role) {
     return (

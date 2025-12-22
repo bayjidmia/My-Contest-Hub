@@ -23,7 +23,8 @@ const Login = () => {
     console.log("Form submitted:", data);
     signIn(data.email, data.password)
       .then((result) => {
-        setuser(result);
+        console.log("from Login", result);
+        setuser(result.user);
         navigate(location?.state || "/");
       })
       .catch((error) => {
