@@ -8,6 +8,7 @@ import { MdCreateNewFolder, MdOutlineAssignmentTurnedIn } from "react-icons/md";
 
 const DashboardLayout = () => {
   const { role, isLoading } = useRole();
+  console.log(role);
 
   if (isLoading || !role) {
     return (
@@ -16,7 +17,7 @@ const DashboardLayout = () => {
       </div>
     );
   }
-  console.log(role);
+
   return (
     <div className="drawer max-w-7xl mx-auto lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />

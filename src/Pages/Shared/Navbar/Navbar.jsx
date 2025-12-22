@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 
 import { AuthContext } from "../../../Authprovide/Context/Context";
 import { Link, NavLink, useNavigate } from "react-router";
-import ThemeToggle from "../../ThemeToggle/ThemeToggle";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -81,7 +80,6 @@ const Navbar = () => {
           <Link to="/" className="text-2xl font-bold text-primary">
             Contest<span className="text-neutral">Hub</span>
           </Link>
-          <ThemeToggle></ThemeToggle>
         </div>
 
         {/* CENTER */}

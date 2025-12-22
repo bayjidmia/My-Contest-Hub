@@ -12,11 +12,35 @@ import {
 import { auth } from "../../firebase.config";
 import { AuthContext } from "../Context/Context";
 
+const googleProvider = new GoogleAuthProvider();
+
 const Authprovider = ({ children }) => {
   const [user, setuser] = useState(null);
   const [loading, setloading] = useState(true);
 
-  console.log(user);
+  const createUser = (email, password) => {
+    setloading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const signIn = (email, password) => {
+    setloading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const GooglesignIn = () => {
+    setloading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  const updateUser = (updateData) => {
+    return updateProfile(auth.currentUser, updateData);
+  };
+
+  const logout = () => {
+    return signOut(auth);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       setuser(currentuser);
@@ -24,31 +48,11 @@ const Authprovider = ({ children }) => {
     });
 
     return () => {
-      unsubscribe();
+      return unsubscribe();
     };
   }, []);
-  const googleProvider = new GoogleAuthProvider();
 
-  const GooglesignIn = () => {
-    return signInWithPopup(auth, googleProvider);
-  };
-
-  const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
-
-  const updateUser = (updateData) => {
-    return updateProfile(auth.currentUser, updateData);
-  };
-
-  const signIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
-  };
-
-  const logout = () => {
-    return signOut(auth);
-  };
-  const Authdata = {
+  const aunthInfo = {
     updateUser,
     createUser,
     user,
@@ -59,7 +63,7 @@ const Authprovider = ({ children }) => {
     GooglesignIn,
     loading,
   };
-  return <AuthContext value={Authdata}>{children}</AuthContext>;
+  return <AuthContext value={aunthInfo}>{children}</AuthContext>;
 };
 
 export default Authprovider;
