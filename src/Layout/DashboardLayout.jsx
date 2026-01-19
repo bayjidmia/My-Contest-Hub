@@ -1,205 +1,201 @@
-import React, { useContext } from "react";
-import { Link, Outlet } from "react-router";
-import { FaRegCheckCircle, FaTrophy } from "react-icons/fa";
-import { AiOutlineTruck, AiOutlineUser } from "react-icons/ai";
-import useRole from "../Hook/useRole";
+import React, { useContext, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router";
+import { FaRegCheckCircle, FaTrophy, FaBars } from "react-icons/fa";
+import { AiOutlineUser } from "react-icons/ai";
 import { GiTrophyCup } from "react-icons/gi";
-import { MdCreateNewFolder, MdOutlineAssignmentTurnedIn } from "react-icons/md";
+import {
+  MdCreateNewFolder,
+  MdOutlineAssignmentTurnedIn,
+  MdSettings,
+} from "react-icons/md";
 import { AuthContext } from "../Authprovide/Context/Context";
+import useRole from "../Hook/useRole";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DashboardLayout = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { role, isLoading } = useRole();
-  console.log(role, isLoading);
+  const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (isLoading || !role) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-spinner text-error"></span>
+      <div className="flex justify-center items-center min-h-screen bg-gray-50">
+        <span className="loading loading-spinner text-green-500 text-3xl"></span>
       </div>
     );
   }
 
+  const menuItems = {
+    user: [
+      {
+        icon: <FaRegCheckCircle />,
+        label: "My Participated Contests",
+        path: "/dashboard/my-contest",
+      },
+      {
+        icon: <FaTrophy />,
+        label: "My Winning Contests",
+        path: "/dashboard/my-winning-contest",
+      },
+    ],
+    admin: [
+      {
+        icon: <MdOutlineAssignmentTurnedIn />,
+        label: "Approve Contests",
+        path: "/dashboard/contest-aprove",
+      },
+      {
+        icon: <AiOutlineUser />,
+        label: "Manage Users",
+        path: "/dashboard/all-user",
+      },
+    ],
+    creator: [
+      {
+        icon: <GiTrophyCup />,
+        label: "Set Winner",
+        path: "/dashboard/set-winner",
+      },
+      {
+        icon: <MdCreateNewFolder />,
+        label: "My Created Contests",
+        path: "/dashboard/my-created-contest",
+      },
+    ],
+  };
+
   return (
-    <div className="drawer max-w-7xl mx-auto lg:drawer-open">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
+      {/* Sidebar for desktop */}
+      <div className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-gray-800 to-gray-900 text-white shadow-xl">
+        <div className="p-6 text-2xl font-bold text-green-400">
+          Contest Dashboard
+        </div>
+        <nav className="flex-1 px-4 space-y-2">
+          {menuItems[role]?.map((item, idx) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={idx}
+                to={item.path}
+                className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "bg-green-500 text-white shadow-lg"
+                    : "hover:bg-green-500/20 hover:text-green-400"
+                }`}
+              >
+                <div
+                  className={`p-2 rounded-full ${isActive ? "bg-white text-green-500" : "bg-green-500/20"}`}
+                >
+                  {item.icon}
+                </div>
+                <span className="font-medium">{item.label}</span>
+              </Link>
+            );
+          })}
+
+          <Link
+            to="/dashboard/settings"
+            className="flex items-center gap-3 p-3 rounded-xl mt-auto hover:bg-gray-700 hover:text-green-400 transition"
           >
-            {/* Sidebar toggle icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2"
-              fill="none"
-              stroke="currentColor"
-              className="my-1.5 inline-block size-4"
-            >
-              <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-              <path d="M9 4v16"></path>
-              <path d="M14 10l2 2l-2 2"></path>
-            </svg>
-          </label>
-          <div className="px-4">Navbar Title</div>
+            <MdSettings className="text-xl" />
+            <span className="font-medium">Settings</span>
+          </Link>
         </nav>
-        {/* Page content here */}
-        <Outlet></Outlet>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow">
-            {/* List item */}
-            <li>
-              <Link
-                to={"/"}
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
-              >
-                {/* Home icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                  <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                </svg>
-                <span className="is-drawer-close:hidden">Homepage</span>
-              </Link>
-            </li>
-            {role === "user" && (
-              <>
-                <li>
-                  <Link
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Participated Contests"
-                    to={"/dashboard/my-contest"}
-                  >
-                    <FaRegCheckCircle className="my-1.5 inline-block size-4" />
-
-                    <span className="is-drawer-close:hidden">
-                      My Participated Contests
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My winnig Contests"
-                    to={"/dashboard/my-winning-contest"}
-                  >
-                    <FaTrophy className="my-1.5 inline-block size-4" />
-
-                    <span className="is-drawer-close:hidden">
-                      My Winning Contests
-                    </span>
-                  </Link>
-                </li>
-              </>
-            )}
-
-            {role === "admin" && (
-              <>
-                <li>
-                  <Link
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Aprove-Contest"
-                    to={"/dashboard/contest-aprove"}
-                  >
-                    <MdOutlineAssignmentTurnedIn className="my-1.5 inline-block size-4" />
-
-                    <span className="is-drawer-close:hidden">
-                      Aprove-Contest
-                    </span>
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="manage-user"
-                    to={"/dashboard/all-user"}
-                  >
-                    <AiOutlineUser className="my-1.5 inline-block size-4" />
-                    <span className="is-drawer-close:hidden">Manage-user</span>
-                  </Link>
-                </li>
-              </>
-            )}
-
-            {role === "creator" && (
-              <>
-                <li>
-                  <Link
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="set-winner"
-                    to={"/dashboard/set-winner"}
-                  >
-                    <GiTrophyCup className="my-1.5 inline-block size-4" />
-                    <span className="is-drawer-close:hidden">Set winner</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Created Contest"
-                    to={"/dashboard/my-created-contest"}
-                  >
-                    <MdCreateNewFolder className="my-1.5 inline-block size-4" />
-                    <span className="is-drawer-close:hidden">
-                      My Created Contest
-                    </span>
-                  </Link>
-                </li>
-              </>
-            )}
-
-            {/* List item */}
-            <li>
+      {/* Sidebar Overlay for Mobile */}
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ x: -300 }}
+            animate={{ x: 0 }}
+            exit={{ x: -300 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-y-0 left-0 w-64 z-50 bg-gradient-to-b from-gray-800 to-gray-900 text-white shadow-xl lg:hidden"
+          >
+            <div className="p-6 flex justify-between items-center">
+              <span className="text-2xl font-bold text-green-400">
+                Contest Dashboard
+              </span>
               <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
+                onClick={() => setSidebarOpen(false)}
+                className="text-white text-2xl font-bold"
               >
-                {/* Settings icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M20 7h-9"></path>
-                  <path d="M14 17H5"></path>
-                  <circle cx="17" cy="17" r="3"></circle>
-                  <circle cx="7" cy="7" r="3"></circle>
-                </svg>
-                <span className="is-drawer-close:hidden">Settings</span>
+                &times;
               </button>
-            </li>
-          </ul>
+            </div>
+            <nav className="flex-1 px-4 space-y-2">
+              {menuItems[role]?.map((item, idx) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={idx}
+                    to={item.path}
+                    onClick={() => setSidebarOpen(false)}
+                    className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 ${
+                      isActive
+                        ? "bg-green-500 text-white shadow-lg"
+                        : "hover:bg-green-500/20 hover:text-green-400"
+                    }`}
+                  >
+                    <div
+                      className={`p-2 rounded-full ${isActive ? "bg-white text-green-500" : "bg-green-500/20"}`}
+                    >
+                      {item.icon}
+                    </div>
+                    <span className="font-medium">{item.label}</span>
+                  </Link>
+                );
+              })}
+              <Link
+                to="/dashboard/settings"
+                onClick={() => setSidebarOpen(false)}
+                className="flex items-center gap-3 p-3 rounded-xl mt-auto hover:bg-gray-700 hover:text-green-400 transition"
+              >
+                <MdSettings className="text-xl" />
+                <span className="font-medium">Settings</span>
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Navbar */}
+        <div className="flex items-center justify-between bg-white px-6 py-4 shadow-md">
+          <div className="flex items-center gap-4">
+            {/* Mobile Hamburger */}
+            <button
+              className="lg:hidden text-gray-700 text-2xl"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <FaBars />
+            </button>
+            <div className="text-xl font-semibold text-gray-700">Dashboard</div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="text-gray-500 font-medium hidden sm:block">
+              {user?.displayName}
+            </div>
+            <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
+              {user?.displayName?.[0] || "U"}
+            </div>
+          </div>
         </div>
+
+        {/* Page Content */}
+        <motion.div
+          className="flex-1 overflow-auto p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Outlet />
+        </motion.div>
       </div>
     </div>
   );

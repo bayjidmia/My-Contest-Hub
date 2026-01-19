@@ -90,7 +90,10 @@ const Login = () => {
             )}
           </div>
 
-          <button className="btn btn-primary w-full mt-4" type="submit">
+          <button
+            className="btn btn-primary w-full mt-4 text-black "
+            type="submit"
+          >
             Login
           </button>
         </form>

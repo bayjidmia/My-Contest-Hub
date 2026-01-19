@@ -180,7 +180,9 @@ const Register = () => {
           </div>
 
           {/* Register Button */}
-          <button className="btn btn-primary w-full mt-4">Register</button>
+          <button className="btn btn-primary w-full mt-4 text-black ">
+            Register
+          </button>
         </form>
         <div className="divider">OR</div>
 

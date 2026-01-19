@@ -91,7 +91,7 @@ const Navbar = () => {
         <div className="navbar-end gap-3">
           {/* If not logged in */}
           {!user ? (
-            <Link to="/login" className="btn btn-primary">
+            <Link to="/login" className="btn btn-primary text-black">
               Login
             </Link>
           ) : (
