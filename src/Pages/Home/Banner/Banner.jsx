@@ -44,12 +44,12 @@ const Banner = ({ onSearch }) => {
     <div>
       <Swiper
         modules={[Autoplay, Pagination, Navigation, EffectFade]}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 2000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         navigation
         loop
         effect="fade"
-        className="h-[500px]"
+        className=" container mx-auto h-[500px] rounded-2xl overflow-hidden shadow-2xl mt-3 "
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>

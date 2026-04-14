@@ -43,7 +43,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="py-24 px-6 max-w-7xl mx-auto">
+    <section className="py-24 px-6 container mx-auto">
       {/* Section Title */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}

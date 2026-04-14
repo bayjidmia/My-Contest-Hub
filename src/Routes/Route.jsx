@@ -59,10 +59,7 @@ export const router = createBrowserRouter([
         path: "/all-contest",
         Component: AllContest,
       },
-      {
-        path: "/profile",
-        Component: Profile,
-      },
+
       {
         path: "/motivation",
         Component: Motivation,
@@ -89,6 +86,7 @@ export const router = createBrowserRouter([
         path: "payment/:id",
         Component: Payment,
       },
+
       {
         path: "payment-success",
         Component: PaymentSuccess,
@@ -117,6 +115,10 @@ export const router = createBrowserRouter([
       {
         path: "my-winning-contest",
         Component: Mywinningcontest,
+      },
+      {
+        path: "profile",
+        Component: Profile,
       },
     ],
   },

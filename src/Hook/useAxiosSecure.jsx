@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../Authprovide/Context/Context";
 
 const axiosSecure = axios.create({
-  baseURL: "https://contesthub-server-bay.vercel.app",
+  baseURL: "https://my-contest-server.vercel.app/",
 });
 
 const useAxiosSecure = () => {
@@ -36,7 +36,7 @@ const useAxiosSecure = () => {
             });
           }
           return Promise.reject(err);
-        }
+        },
       );
 
       return () => {

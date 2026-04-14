@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { AuthContext } from "../../../Authprovide/Context/Context";
 import { Link, NavLink, useNavigate } from "react-router";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const navLinks = (
     <>
@@ -45,35 +47,33 @@ const Navbar = () => {
   };
 
   return (
-    <div className="shadow-md bg-base-100 sticky top-0 z-50">
+    <div className=" w-full shadow-md bg-base-100 sticky top-0 z-50">
       <div className="navbar container mx-auto">
         {/* LEFT */}
         <div className="navbar-start">
           {/* Mobile Menu */}
-          <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </label>
+          <div className="lg:hidden">
+            {/* Open Button */}
+            <button onClick={() => setOpen(true)} className="p-2">
+              <Menu size={28} />
+            </button>
 
-            {/* Mobile Dropdown Menu */}
+            {/* UL Dropdown */}
             <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-52"
+              className={`fixed top-0 left-0 h-full w-72 bg-base-100 shadow-xl p-6 z-50 transform transition-transform duration-300 ${
+                open ? "translate-x-0" : "-translate-x-full"
+              }`}
             >
-              {navLinks}
+              {/* Close Button */}
+              <button
+                onClick={() => setOpen(false)}
+                className="absolute top-4 right-4"
+              >
+                <X size={24} />
+              </button>
+
+              {/* Links */}
+              <div className="mt-10 flex flex-col gap-4">{navLinks}</div>
             </ul>
           </div>
 

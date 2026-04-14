@@ -7,7 +7,7 @@ import Statistics from "../../ExtraSection/Statistics";
 
 const Home = () => {
   return (
-    <div className="max-w-7xl mx-auto">
+    <div>
       <Banner></Banner>
       <LatestContext></LatestContext>
       <Features></Features>

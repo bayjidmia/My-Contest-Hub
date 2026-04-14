@@ -29,13 +29,11 @@ const AllContest = () => {
     },
   });
 
-  console.log("ttt", payments);
-
   const getPaymentCount = (contestId) => {
     if (!payments) return 0;
 
     return payments.filter(
-      (payment) => payment.contestd === contestId && payment.status === "paid"
+      (payment) => payment.contestd === contestId && payment.status === "paid",
     ).length;
   };
 
@@ -47,7 +45,7 @@ const AllContest = () => {
     );
   }
   return (
-    <div>
+    <div className="container mx-auto">
       <h1 className="text-center font-bold text-3xl text-black my-8 ">
         <span className="text-primary">All</span> Contest
       </h1>

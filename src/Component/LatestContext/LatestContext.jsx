@@ -25,7 +25,7 @@ const LatestContext = () => {
   }
 
   return (
-    <div>
+    <div className="container mx-auto">
       <h1 className="text-center font-bold text-3xl mt-5">
         <span className="text-primary">Latest</span> Contest
       </h1>
