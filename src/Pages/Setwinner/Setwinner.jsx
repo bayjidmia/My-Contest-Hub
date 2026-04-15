@@ -201,8 +201,8 @@ const Setwinner = () => {
             showConfirmButton: false,
           });
           refetch();
-        } catch (err) {
-          Swal.fire("Error", "Could not update winner", "error");
+        } catch (error) {
+          Swal.fire("Error", "Could not update winner", error.message);
         }
       }
     });

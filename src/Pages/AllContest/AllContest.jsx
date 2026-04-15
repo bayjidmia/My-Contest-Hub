@@ -1,19 +1,16 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router";
 import { IoIosMan } from "react-icons/io";
-import { useContext } from "react";
 import { AuthContext } from "../../Authprovide/Context/Context";
 
 const AllContest = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
-  const {
-    data: contests = [],
 
-    isLoading,
-  } = useQuery({
+  // ✅ contests (unchanged)
+  const { data: contests = [], isLoading } = useQuery({
     queryKey: ["all-contest"],
     queryFn: async () => {
       const res = await axiosSecure.get("all-contest?status=approved");
@@ -21,20 +18,30 @@ const AllContest = () => {
     },
   });
 
-  const { data: payments } = useQuery({
+  // 🔥 FIX: remove full /all-payments dependency issue
+  const { data: payments = [] } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
       const res = await axiosSecure.get("/all-payments");
       return res.data;
     },
+    staleTime: 1000 * 60 * 5, // 5 min cache
   });
 
-  const getPaymentCount = (contestId) => {
-    if (!payments) return 0;
+  const paymentCountMap = useMemo(() => {
+    const map = {};
 
-    return payments.filter(
-      (payment) => payment.contestd === contestId && payment.status === "paid",
-    ).length;
+    payments.forEach((p) => {
+      if (p.status === "paid") {
+        map[p.contestd] = (map[p.contestd] || 0) + 1;
+      }
+    });
+
+    return map;
+  }, [payments]);
+
+  const getPaymentCount = (contestId) => {
+    return paymentCountMap[contestId] || 0;
   };
 
   if (isLoading) {
@@ -44,34 +51,43 @@ const AllContest = () => {
       </div>
     );
   }
+
   return (
     <div className="container mx-auto">
       <h1 className="text-center font-bold text-3xl text-black my-8 ">
         <span className="text-primary">All</span> Contest
       </h1>
-      <div className=" grid gap-5 my-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {contests.map((contest, index) => {
+
+      <div className="grid gap-5 my-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {contests.map((contest) => {
+          const count =
+            contest.paymentStatus == "paid"
+              ? contest.participantsCount + getPaymentCount(contest._id)
+              : contest.participantsCount;
+
           return (
             <div
-              key={index}
-              className="card  bg-white shadow-md rounded-xl p-5 
-    transition-transform duration-300 
-   hover:-translate-y-2  hover:shadow-xl bg-base-100  shadow-sm "
+              key={contest._id} // ✅ FIXED (no index)
+              className="card bg-white shadow-md rounded-xl p-5 
+              transition-transform duration-300 
+              hover:-translate-y-2 hover:shadow-xl bg-base-100 shadow-sm"
             >
               <figure className="w-full h-60 overflow-hidden">
                 <img
                   className="w-full h-full object-cover"
                   src={contest.image}
-                  alt="Shoes"
+                  alt="contest"
                 />
               </figure>
+
               <div className="card-body">
                 <h2 className="card-title">
                   {contest.contestName}
                   <div className="badge badge-secondary">LATEST</div>
                 </h2>
+
                 <div className="px-4 text-gray-600 text-sm mb-2">
-                  <p>{contest.description.slice(0, 100)} </p>
+                  <p>{contest.description.slice(0, 100)}</p>
 
                   <NavLink
                     to={user ? `/contest-details/${contest._id}` : "/login"}
@@ -81,23 +97,14 @@ const AllContest = () => {
                   </NavLink>
                 </div>
               </div>
+
               <div className="flex text-center">
                 <div className="ml-8 flex gap-1">
-                  <div className="ml-8 flex gap-1">
-                    <h1 className="text-xl font-bold">
-                      <IoIosMan />
-                    </h1>
-                    {contest.paymentStatus == "paid" ? (
-                      <h2 className="font-bold text-gray-500">
-                        {contest.participantsCount +
-                          getPaymentCount(contest._id)}
-                      </h2>
-                    ) : (
-                      <h2 className="font-bold text-gray-500">
-                        {contest.participantsCount}
-                      </h2>
-                    )}
-                  </div>
+                  <h1 className="text-xl font-bold">
+                    <IoIosMan />
+                  </h1>
+
+                  <h2 className="font-bold text-gray-500">{count}</h2>
                 </div>
               </div>
             </div>

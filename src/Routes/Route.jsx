@@ -21,6 +21,7 @@ import Mycreatedcontest from "../Pages/Mycreatedcontest/Mycreatedcontest";
 import Mywinningcontest from "../Pages/Mywiningcontest/Mywinningcontest";
 import AdminRoute from "../Hook/AdminRoute";
 import Motivation from "../Pages/Motivation/Motivation";
+import Dashboardhome from "../Pages/DashboardHome/Dashboardhome";
 
 export const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        Component: Dashboardhome,
+      },
       {
         path: "contest-aprove",
         element: (
