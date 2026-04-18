@@ -22,6 +22,7 @@ import Mywinningcontest from "../Pages/Mywiningcontest/Mywinningcontest";
 import AdminRoute from "../Hook/AdminRoute";
 import Motivation from "../Pages/Motivation/Motivation";
 import Dashboardhome from "../Pages/DashboardHome/Dashboardhome";
+import About from "../Pages/ExtraSection/About";
 
 export const router = createBrowserRouter([
   {
@@ -48,14 +49,12 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
       {
-        path: "/create-contest",
-        element: (
-          <PrivateRoute>
-            <CreateContest></CreateContest>
-          </PrivateRoute>
-        ),
+        path: "/about",
+        Component: About,
       },
+
       {
         path: "/all-contest",
         Component: AllContest,
@@ -86,6 +85,10 @@ export const router = createBrowserRouter([
             <ContestAprove></ContestAprove>
           </AdminRoute>
         ),
+      },
+      {
+        path: "add-contest",
+        element: <CreateContest></CreateContest>,
       },
       {
         path: "payment/:id",

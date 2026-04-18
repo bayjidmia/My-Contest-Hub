@@ -33,8 +33,8 @@ const Navbar = () => {
       </li>
       <li>
         {user && (
-          <NavLink to="/create-contest" className="font-semibold">
-            Create Contest
+          <NavLink to="/about" className="font-semibold">
+            About Us
           </NavLink>
         )}
       </li>

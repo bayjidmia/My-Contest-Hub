@@ -19,6 +19,7 @@ import {
   Zap,
   ChevronRight,
 } from "lucide-react";
+import { Link } from "react-router";
 
 // Mock data for submission trends
 const submissionTrends = [
@@ -44,10 +45,12 @@ const Creatorhome = () => {
             Manage your contests and track participant engagement.
           </p>
         </div>
-        <button className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100">
-          <PlusCircle size={18} />
-          Create New Contest
-        </button>
+        <Link to="/dashboard/add-contest">
+          <button className="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-100">
+            <PlusCircle size={18} />
+            Create New Contest
+          </button>
+        </Link>
       </div>
 
       {/* Creator Metrics */}
