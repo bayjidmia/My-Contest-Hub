@@ -41,7 +41,14 @@ body {
 .animate-slide-left {
   animation: slideInLeft 0.8s ease-out forwards;
 }
-
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+.animate-shine {
+  animation: shine 0.8s;
+}
 .delay-100 {
   animation-delay: 0.1s;
 }
