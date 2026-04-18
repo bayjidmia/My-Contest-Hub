@@ -23,6 +23,7 @@ import AdminRoute from "../Hook/AdminRoute";
 import Motivation from "../Pages/Motivation/Motivation";
 import Dashboardhome from "../Pages/DashboardHome/Dashboardhome";
 import About from "../Pages/ExtraSection/About";
+import Leaderboard from "../Pages/ExtraSection/Leaderboard";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
       {
         path: "/motivation",
         Component: Motivation,
+      },
+      {
+        path: "/leaderboard",
+        Component: Leaderboard,
       },
     ],
   },
