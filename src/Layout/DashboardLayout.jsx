@@ -498,7 +498,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#F8FAFC]">
+    <div className="flex h-screen bg-[#F8FAFC]  ">
       {/* Sidebar Desktop & Mobile */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-72 bg-[#1E293B] text-slate-300 transform transition-all duration-300 ease-in-out lg:static lg:translate-x-0 

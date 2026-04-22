@@ -1,3 +1,4 @@
+//
 import { motion } from "framer-motion";
 import {
   FaTrophy,
@@ -49,7 +50,7 @@ export default function Features() {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-3xl md:text-4xl font-bold text-center mb-4 text-black"
+        className="text-3xl md:text-4xl font-bold text-center mb-4 text-black dark:text-white"
       >
         <span className="text-primary">Powerful</span> Features
       </motion.h2>
@@ -58,7 +59,7 @@ export default function Features() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="text-center text-gray-400 mb-16"
+        className="text-center text-gray-500 dark:text-gray-400 mb-16"
       >
         Built for winning, creating and controlling contests
       </motion.p>
@@ -73,18 +74,20 @@ export default function Features() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
             whileHover={{ y: -8 }}
-            className="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition"
+            className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 border border-transparent dark:border-gray-700"
           >
-            {/* Icon */}
-            <div className="w-14 h-14 flex items-center justify-center rounded-full bg-green-100 text-green-600 text-2xl mb-6">
+            {/* Icon - Adjusting circle color for dark mode */}
+            <div className="w-14 h-14 flex items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-2xl mb-6">
               {item.icon}
             </div>
 
-            <h3 className="text-xl font-semibold mb-3 text-gray-900">
+            <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
               {item.title}
             </h3>
 
-            <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+              {item.desc}
+            </p>
           </motion.div>
         ))}
       </div>

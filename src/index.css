@@ -1,14 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
 @plugin "daisyui" {
-  themes: light --default;
+  themes:
+    light --default,
+    dark;
 }
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true;
+
+.root {
+  background: #fff;
   --color-primary: #caeb66;
   --color-secondary: red;
 }
+.dark {
+  background: #000;
+  --color-primary: #caeb66;
+  --color-secondary: red;
+}
+
 body {
   font-family: "Inter", sans-serif;
 }

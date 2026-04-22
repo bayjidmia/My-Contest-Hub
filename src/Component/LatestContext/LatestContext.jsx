@@ -14,7 +14,6 @@ const LatestContext = () => {
       const res = await axiosSecure.get("latest-contest");
       return res.data;
     },
-
     staleTime: 1000 * 60 * 5, // 5 min cache
   });
 
@@ -27,68 +26,78 @@ const LatestContext = () => {
   }
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-center font-bold text-3xl mt-5">
+    <div className="container mx-auto px-4 lg:px-0">
+      <h1 className="text-center font-bold text-3xl mt-10 dark:text-white">
         <span className="text-primary">Latest</span> Contest
       </h1>
-      <div className=" grid gap-5 my-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+      <div className="grid gap-6 my-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {contests.map((contest, index) => {
           return (
             <div
-              key={index}
-              className="card  bg-white shadow-md rounded-xl p-5 
-    transition-transform duration-300 
-   hover:-translate-y-2  hover:shadow-xl bg-base-100  shadow-sm "
+              key={contest._id}
+              className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-transparent dark:border-slate-700 flex flex-col h-full"
             >
-              <figure className="w-full h-60 overflow-hidden">
+              {/* Image Container */}
+              <figure className="relative w-full h-56 overflow-hidden">
                 <img
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   src={contest.image}
-                  alt="Shoes"
+                  alt={contest.contestName}
                 />
+                <div className="absolute top-4 right-4">
+                  <div className="badge badge-secondary font-bold px-3 py-3 border-none">
+                    NEW
+                  </div>
+                </div>
               </figure>
-              <div className="card-body">
-                <h2 className="card-title">
-                  {contest.contestName}
-                  <div className="badge badge-secondary">LATEST</div>
-                </h2>
-                <div className="px-4 text-gray-600 text-sm mb-2">
-                  <p>{contest.description.slice(0, 100)} </p>
 
+              {/* Content */}
+              <div className="p-6 flex flex-col flex-grow">
+                <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-3 line-clamp-1">
+                  {contest.contestName}
+                </h2>
+
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 line-clamp-3 leading-relaxed">
+                  {contest.description}
+                </p>
+
+                <div className="mt-auto">
                   <NavLink
                     to={user ? `/contest-details/${contest._id}` : "/login"}
-                    state={`/contest-details/${contest._id}`}
-                    className="text-blue-600 font-medium cursor-pointer"
+                    className="inline-block text-primary dark:text-indigo-400 font-bold text-sm hover:underline"
                   >
-                    read more...
+                    Details & Joining →
                   </NavLink>
                 </div>
               </div>
-              <div className="flex text-center">
-                <div className="ml-8 flex gap-1">
-                  <div className="ml-8 flex gap-1">
-                    <h1 className="text-xl font-bold">
-                      <IoIosMan />
-                    </h1>
-                    {contest.paymentStatus == "paid" ? (
-                      <h2 className="font-bold text-gray-500">
-                        {contest.participantsCount + 1}
-                      </h2>
-                    ) : (
-                      <h2 className="font-bold text-gray-500">
-                        {contest.participantsCount}
-                      </h2>
-                    )}
-                  </div>
+
+              {/* Footer / Stats */}
+              <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                  <IoIosMan className="text-xl text-primary" />
+                  <span className="font-bold text-lg">
+                    {contest.participantsCount}
+                  </span>
+                  <span className="text-xs uppercase tracking-wider font-medium ml-1">
+                    Joined
+                  </span>
+                </div>
+
+                <div className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                  Active
                 </div>
               </div>
             </div>
           );
         })}
       </div>
-      <div className="text-center my-3">
+
+      <div className="text-center my-8">
         <NavLink to={"/all-contest"}>
-          <button className="btn btn-primary text-black ">see all</button>
+          <button className="btn btn-primary px-8 text-white font-bold dark:text-black">
+            See All Contests
+          </button>
         </NavLink>
       </div>
     </div>

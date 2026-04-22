@@ -64,14 +64,14 @@ export default function Statistics() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition text-center"
+              className="bg-white dark:bg-gray-800/50 p-8 rounded-2xl shadow-md hover:shadow-2xl transition text-center"
             >
-              <p className="text-4xl font-bold text-gray-900 mb-2">
+              <p className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
                 {stat.label === "Average Joining Rate (%)"
                   ? count + "%"
                   : count.toLocaleString()}
               </p>
-              <p className="text-gray-600">{stat.label}</p>
+              <p className="text-gray-600 dark:text-gray-200">{stat.label}</p>
             </motion.div>
           );
         })}

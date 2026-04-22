@@ -50,10 +50,10 @@ const Motivation = () => {
   ];
 
   return (
-    <div className="bg-[#F8FAFC] py-16">
+    <div className="bg-[#F8FAFC] dark:bg-slate-950 py-16 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
         {/* HERO MOTIVATION HEADER */}
-        <div className="relative overflow-hidden rounded-[3rem] bg-[#0F172A] p-12 lg:p-20 shadow-2xl mb-20">
+        <div className="relative overflow-hidden rounded-[3rem] bg-[#0F172A] dark:bg-black p-12 lg:p-20 shadow-2xl mb-20 border dark:border-slate-800">
           {/* Background Decor */}
           <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/10 to-transparent pointer-events-none"></div>
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
@@ -89,7 +89,7 @@ const Motivation = () => {
               {quotes.map((quote, index) => (
                 <div
                   key={index}
-                  className="bg-slate-800/40 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl transform transition-all duration-500 hover:-translate-y-1 hover:border-primary/30"
+                  className="bg-slate-800/40 dark:bg-slate-900/40 backdrop-blur-md border border-slate-700/50 p-6 rounded-2xl transform transition-all duration-500 hover:-translate-y-1 hover:border-primary/30"
                 >
                   <p className="text-slate-200 font-bold italic mb-2 leading-relaxed text-sm">
                     "{quote.text}"
@@ -106,7 +106,7 @@ const Motivation = () => {
         {/* INFORMATIVE SECTION: THE GROWTH ENGINE */}
         <div className="mb-20">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-slate-900 tracking-tight mb-4 uppercase">
+            <h2 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4 uppercase">
               The Growth Engine
             </h2>
             <div className="w-20 h-1.5 bg-primary mx-auto rounded-full"></div>
@@ -116,11 +116,11 @@ const Motivation = () => {
             {cards.map((card, index) => (
               <div
                 key={index}
-                className="group relative bg-white p-10 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+                className="group relative bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
               >
                 {/* Decorative Icon Background */}
                 <div
-                  className={`absolute -right-4 -bottom-4 opacity-5 transition-transform duration-500 group-hover:scale-150`}
+                  className={`absolute -right-4 -bottom-4 opacity-5 dark:opacity-10 transition-transform duration-500 group-hover:scale-150 text-slate-900 dark:text-white`}
                 >
                   {card.icon}
                 </div>
@@ -130,10 +130,10 @@ const Motivation = () => {
                 >
                   {card.icon}
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 mb-4 uppercase tracking-tighter">
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tighter">
                   {card.title}
                 </h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                   {card.content}
                 </p>
               </div>
@@ -142,39 +142,40 @@ const Motivation = () => {
         </div>
 
         {/* WHY COMPETE SECTION: INFORMATIVE STATS */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white rounded-[3rem] p-10 lg:p-16 border border-slate-100 shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center bg-white dark:bg-slate-900 rounded-[3rem] p-10 lg:p-16 border border-slate-100 dark:border-slate-800 shadow-xl transition-colors duration-300">
           <div>
-            <h3 className="text-3xl font-black text-slate-900 mb-6 flex items-center gap-3">
-              <TrendingUp className="text-indigo-600" /> WHY COMPETE?
+            <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+              <TrendingUp className="text-indigo-600 dark:text-indigo-400" />{" "}
+              WHY COMPETE?
             </h3>
-            <p className="text-slate-600 font-medium mb-8 leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-400 font-medium mb-8 leading-relaxed">
               Competitions are the ultimate shortcut to mastery. By joining the
               Contest Hub arena, you aren't just solving problems; you are
               building a verified pedigree of excellence.
             </p>
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="mt-1 bg-indigo-100 p-2 rounded-lg text-indigo-600">
+                <div className="mt-1 bg-indigo-100 dark:bg-indigo-950/30 p-2 rounded-lg text-indigo-600 dark:text-indigo-400">
                   <Lightbulb size={20} />
                 </div>
                 <div>
-                  <h4 className="font-black text-slate-800 uppercase text-sm tracking-tight">
+                  <h4 className="font-black text-slate-800 dark:text-slate-200 uppercase text-sm tracking-tight">
                     Rapid Skill Acquisition
                   </h4>
-                  <p className="text-xs text-slate-500 font-bold">
+                  <p className="text-xs text-slate-500 dark:text-slate-500 font-bold">
                     Solve in 2 hours what others learn in 2 weeks.
                   </p>
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="mt-1 bg-emerald-100 p-2 rounded-lg text-emerald-600">
+                <div className="mt-1 bg-emerald-100 dark:bg-emerald-950/30 p-2 rounded-lg text-emerald-600 dark:text-emerald-400">
                   <TrendingUp size={20} />
                 </div>
                 <div>
-                  <h4 className="font-black text-slate-800 uppercase text-sm tracking-tight">
+                  <h4 className="font-black text-slate-800 dark:text-slate-200 uppercase text-sm tracking-tight">
                     Portfolio Building
                   </h4>
-                  <p className="text-xs text-slate-500 font-bold">
+                  <p className="text-xs text-slate-500 dark:text-slate-500 font-bold">
                     Every win is a certificate of industry-ready talent.
                   </p>
                 </div>
@@ -182,13 +183,13 @@ const Motivation = () => {
             </div>
           </div>
 
-          <div className="relative group rounded-3xl overflow-hidden shadow-2xl">
+          <div className="relative group rounded-3xl overflow-hidden shadow-2xl border dark:border-slate-800">
             <img
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
               alt="Growth"
               className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/80 to-transparent flex items-end p-8">
+            <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/80 dark:from-black/90 to-transparent flex items-end p-8">
               <p className="text-white font-black italic text-xl">
                 " Mastery is not a destination, it's a continuous contest. "
               </p>
