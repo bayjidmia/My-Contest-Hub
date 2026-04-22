@@ -313,7 +313,10 @@ const Navbar = () => {
 
           {/* User Section */}
           {!user ? (
-            <Link to="/login" className="btn btn-primary btn-sm md:btn-md">
+            <Link
+              to="/login"
+              className="btn btn-primary btn-sm md:btn-md dark:text-black "
+            >
               Login
             </Link>
           ) : (
