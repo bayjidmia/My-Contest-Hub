@@ -13,7 +13,6 @@ import "swiper/css/effect-fade";
 import image1 from "../../../assets/image copy 2.png";
 import image2 from "../../../assets/image copy.png";
 import image3 from "../../../assets/image.png";
-import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 const slides = [
   {
@@ -35,8 +34,6 @@ const slides = [
 
 const Banner = ({ onSearch }) => {
   const [searchText, setSearchText] = useState("");
-
-  const axiosSecure = useAxiosSecure();
 
   const handleSearch = async () => {};
 
@@ -79,7 +76,7 @@ const Banner = ({ onSearch }) => {
                   />
                   <button
                     onClick={handleSearch}
-                    className="btn  text-black btn-primary"
+                    className="btn  text-white btn-primary dark:text-black"
                   >
                     Search
                   </button>

@@ -217,7 +217,7 @@ const Mycreatedcontest = () => {
           </p>
         </div>
         <Link to="/dashboard/add-contest">
-          <button className="bg-primary hover:bg-black text-black hover:text-white px-6 py-3 rounded-2xl font-black transition-all duration-300 shadow-lg shadow-primary/20 flex items-center gap-2">
+          <button className="bg-primary hover:bg-black text-white dark:text-black hover:text-white px-6 py-3 rounded-2xl font-black transition-all duration-300 shadow-lg shadow-primary/20 flex items-center gap-2">
             Launch New Contest +
           </button>
         </Link>
