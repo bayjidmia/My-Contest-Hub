@@ -8,13 +8,14 @@ import { AuthContext } from "../../Authprovide/Context/Context";
 const LatestContext = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
-  const { data: contests, isLoading } = useQuery({
+  const { data: contests = [], isLoading } = useQuery({
     queryKey: ["latest-contest"],
     queryFn: async () => {
-      const res = await axiosSecure.get("latest-contest");
+      const res = await axiosSecure.get("/latest-contest");
       return res.data;
     },
-    staleTime: 1000 * 60 * 5, // 5 min cache
+
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading) {
