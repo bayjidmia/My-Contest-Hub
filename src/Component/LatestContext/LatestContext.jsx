@@ -12,7 +12,7 @@ const LatestContext = () => {
   const { data: contests = [], isLoading } = useQuery({
     queryKey: ["latest-contest"],
     queryFn: async () => {
-      const res = await axiosInstance.get("/latest-contest");
+      const res = await axiosInstance.get("latest-contest");
       return res.data;
     },
 
