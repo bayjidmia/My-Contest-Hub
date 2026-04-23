@@ -117,21 +117,22 @@
 
 // export default AllContest;
 import React, { useContext, useMemo } from "react";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
+
 import { useQuery } from "@tanstack/react-query";
 import { NavLink } from "react-router";
 import { IoIosMan } from "react-icons/io";
 import { AuthContext } from "../../Authprovide/Context/Context";
+import useAxios from "../../Hook/UseAxios";
 
 const AllContest = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
   const { user } = useContext(AuthContext);
 
   // ✅ All approved contests
   const { data: contests = [], isLoading } = useQuery({
     queryKey: ["all-contest"],
     queryFn: async () => {
-      const res = await axiosSecure.get("all-contest?status=approved");
+      const res = await axiosInstance.get("all-contest?status=approved");
       return res.data;
     },
   });
@@ -140,7 +141,7 @@ const AllContest = () => {
   const { data: payments = [] } = useQuery({
     queryKey: ["payments"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-payments");
+      const res = await axiosInstance.get("/all-payments");
       return res.data;
     },
     staleTime: 1000 * 60 * 5, // 5 min cache

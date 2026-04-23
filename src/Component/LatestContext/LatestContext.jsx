@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
+
 import { NavLink } from "react-router";
 import { IoIosMan } from "react-icons/io";
 import { AuthContext } from "../../Authprovide/Context/Context";
+import useAxios from "../../Hook/UseAxios";
 
 const LatestContext = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
   const { user } = useContext(AuthContext);
   const { data: contests = [], isLoading } = useQuery({
     queryKey: ["latest-contest"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/latest-contest");
+      const res = await axiosInstance.get("/latest-contest");
       return res.data;
     },
 
