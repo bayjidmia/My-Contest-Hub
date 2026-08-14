@@ -21,6 +21,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+
     formState: { errors },
   } = useForm();
 
@@ -40,6 +41,17 @@ const Login = () => {
       setuser(res.user);
       navigate(location?.state || "/");
     });
+  };
+
+  const handleDemoLogin = (email, password) => {
+    signIn(email, password)
+      .then((result) => {
+        setuser(result.user);
+        navigate(location?.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -162,6 +174,42 @@ const Login = () => {
               >
                 Sign In
               </button>
+
+              {/* Demo Login Buttons */}
+              <div className="pt-2">
+                <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 mb-2 text-center uppercase tracking-wider">
+                  Demo Accounts
+                </p>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleDemoLogin("user@demo.com", "User@1234")
+                    }
+                    className="btn btn-xs btn-outline border-gray-300 dark:border-slate-700 dark:text-slate-300 hover:bg-primary hover:border-primary hover:text-white transition-all"
+                  >
+                    User
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleDemoLogin("creator@demo.com", "Creator@1234")
+                    }
+                    className="btn btn-xs btn-outline border-gray-300 dark:border-slate-700 dark:text-slate-300 hover:bg-primary hover:border-primary hover:text-white transition-all"
+                  >
+                    Creator
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      handleDemoLogin("aman@gmail.com", "Aman123$")
+                    }
+                    className="btn btn-xs btn-outline border-gray-300 dark:border-slate-700 dark:text-slate-300 hover:bg-primary hover:border-primary hover:text-white transition-all"
+                  >
+                    Admin
+                  </button>
+                </div>
+              </div>
             </form>
 
             <div className="divider my-8 text-gray-400 dark:text-slate-500 text-sm">

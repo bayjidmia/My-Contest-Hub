@@ -342,12 +342,6 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <Link to="/profile" className="py-2">
-                    Your profile
-                  </Link>
-                </li>
-
-                <li>
                   <button onClick={handleLogout} className="text-red-500 py-2">
                     Logout
                   </button>
